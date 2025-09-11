@@ -32,12 +32,14 @@ jobs:
         uses: peter-evans/find-comment@a54c31d7fa095754bfef525c0c8e5e5674c4b4b1 # v2
         id: find
         with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Needed for private
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: release-notes-preview
       - name: Comment preview
         uses: peter-evans/create-or-update-comment@67dcc547d311b736a8e6c5c236542148a47adc3d # v2
         if: steps.notes.outputs.new-release-notes != ''
         with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Needed for private
           comment-id: ${{ steps.find.outputs.comment-id }}
           issue-number: ${{ github.event.number }}
           edit-mode: replace
