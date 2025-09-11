@@ -1,5 +1,6 @@
 {
   "branches": ["main"],
+  "repositoryUrl": "https://github.com/shakefu/py-memory-manager.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     [

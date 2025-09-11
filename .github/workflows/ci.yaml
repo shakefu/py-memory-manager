@@ -26,8 +26,9 @@ jobs:
           fetch-depth: 0
       - name: Generate notes
         id: notes
-        uses: open-turo/actions-release/semantic-release@4d8a6b6aa2d051e7dba0429d8d08beef827b5ccd # v4
+        uses: open-turo/actions-release/semantic-release@94161cffd7a38c20a6e685406996b1cdb259f0d5 # v5
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           branches: ${{ github.head_ref }}
           override-github-ref-name: ${{ github.head_ref }}
           dry-run: true
