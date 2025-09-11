@@ -48,10 +48,43 @@ alloc[:10] = b"Hello, World!"
 # Free the allocated memory
 mm.free(alloc)
 
-# The buffer is now free
+# The buffer is now free, but retains its contents
 print(buf)
 
 ```
+
+### API
+
+This section describes the API of the py-memory-manager library.
+
+#### `MemoryManager(buf: Buffer)`
+
+Create a new memory manager for the given buffer. Buffer must be a `bytearray`
+or `memoryview`.
+
+##### `alloc(size: int) -> memoryview`
+
+Allocate memory from the buffer.
+
+##### `free(alloc: memoryview)`
+
+Free the memory.
+
+##### `unallocated() -> int`
+
+Return the total available memory in the buffer.
+
+##### `available() -> int`
+
+Return the largest contiguous available memory in the buffer.
+
+##### `allocated() -> int`
+
+Return the total allocated memory in the buffer.
+
+#### `create_buffer(size: int) -> bytearray`
+
+Create a new buffer of the given size filled with zero bytes.
 
 ## Contributing
 
