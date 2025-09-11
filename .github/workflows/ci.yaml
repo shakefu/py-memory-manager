@@ -12,49 +12,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  preview:
-    name: Release preview
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-        with:
-          fetch-depth: 0
-      - name: Generate notes
-        id: notes
-        uses: open-turo/actions-release/semantic-release@94161cffd7a38c20a6e685406996b1cdb259f0d5 # v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          branches: ${{ github.head_ref }}
-          override-github-ref-name: ${{ github.head_ref }}
-          dry-run: true
-          ci: false
-      - name: Find Comment
-        uses: peter-evans/find-comment@a54c31d7fa095754bfef525c0c8e5e5674c4b4b1 # v2
-        id: find
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Needed for private
-          issue-number: ${{ github.event.pull_request.number }}
-          body-includes: release-notes-preview
-      - name: Comment preview
-        uses: peter-evans/create-or-update-comment@67dcc547d311b736a8e6c5c236542148a47adc3d # v2
-        if: steps.notes.outputs.new-release-notes != ''
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Needed for private
-          comment-id: ${{ steps.find.outputs.comment-id }}
-          issue-number: ${{ github.event.number }}
-          edit-mode: replace
-          body: |
-            <!-- release-notes-preview -->
-
-            ## Release notes preview
-
-            ${{ steps.notes.outputs.new-release-notes }}
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
