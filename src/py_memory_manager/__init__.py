@@ -79,7 +79,7 @@ class MemoryManager:
 
     def __init__(self, buf: Buffer):
         # Type-coerce the buffer into a bytearray so we can use it as a memoryview
-        if not isinstance(buf, (list, bytes, bytearray, memoryview)):
+        if not isinstance(buf, (bytearray, memoryview)):
             raise TypeError(f"Invalid buffer type: {type(buf)}")
 
         # Capture reference to the buffer, its contents are not zeroed
