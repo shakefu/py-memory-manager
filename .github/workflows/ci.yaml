@@ -84,7 +84,9 @@ jobs:
           # Pytest
           uv sync --locked --all-extras --dev
           uv run pytest --cov
-          uv run coveralls
+          # This is a private repository, so we aren't actually submitting to
+          # coveralls
+          # uv run coveralls
 
   checks:
     name: Checks
