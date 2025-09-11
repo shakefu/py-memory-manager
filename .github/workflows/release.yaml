@@ -56,6 +56,23 @@ jobs:
       - run: |
           # Install dependencies
           uv sync --locked --all-extras --dev
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          cache: npm
+          cache-dependency-path: ".releaserc.yaml"
+          node-version: lts/*
+      - name: Semantic Release
+        id: release
+        run: |
+          # Semantic Release
+          npm install --no-save --no-package-lock \
+            "@semantic-release/commit-analyzer" \
+            "@semantic-release/release-notes-generator" \
+            "@semantic-release/changelog" \
+            "@semantic-release/git" \
+            "@semantic-release/github" \
+            "semantic-release-major-tag" \
+            "conventional-changelog-conventionalcommits"
       - id: version
         uses: open-turo/actions-release/semantic-release@94161cffd7a38c20a6e685406996b1cdb259f0d5 # v5
         with:
