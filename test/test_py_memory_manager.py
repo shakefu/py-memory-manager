@@ -209,3 +209,52 @@ def test_repr_returns_a_string_representation_of_the_memory_manager():
 def test_block_repr_returns_a_string_representation_of_the_block():
     block = Block(0, 100)
     assert repr(block) == "<Block(offset=0, end=100, size=100)>"
+
+
+def test_it_raises_a_type_error_when_initializing_with_an_invalid_buffer_type():
+    with pytest.raises(TypeError):
+        MemoryManager(list())
+
+    with pytest.raises(TypeError):
+        MemoryManager("foo")
+
+    with pytest.raises(TypeError):
+        MemoryManager(1)
+
+    with pytest.raises(TypeError):
+        MemoryManager(None)
+
+    with pytest.raises(TypeError):
+        MemoryManager(object())
+
+    with pytest.raises(TypeError):
+        MemoryManager((1, 2, 3))
+
+
+def test_it_works_with_a_memoryview():
+    # Create a bytearray for writable memory
+    buf = bytearray([0] * 255)
+    # Convert to a memoryview
+    view = memoryview(buf)
+
+    mm = MemoryManager(view)
+    alloc = mm.alloc(100)
+
+    # Assignment to allocated memory
+    alloc[:4] = b"test"
+    assert buf[:4] == b"test"
+
+    # Freed memory doesn't lose the value
+    mm.free(alloc)
+    assert buf[:4] == b"test"
+
+
+def test_released_memory_is_not_reusable():
+    buf = create_buffer(255)
+    mm = MemoryManager(buf)
+    alloc = mm.alloc(100)
+
+    mm.free(alloc)
+
+    with pytest.raises(ValueError):
+        alloc[:4] = b"test"
