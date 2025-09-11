@@ -24,12 +24,35 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          cache: npm
+          cache-dependency-path: ".releaserc.yaml"
+          node-version: lts/*
+      - name: Semantic Release
+        id: release
+        run: |
+          # Semantic Release
+          npm install --no-save --no-package-lock \
+            "@semantic-release/commit-analyzer" \
+            "@semantic-release/release-notes-generator" \
+            "@semantic-release/changelog" \
+            "@semantic-release/git" \
+            "@semantic-release/github" \
+            "semantic-release-major-tag" \
+            "conventional-changelog-conventionalcommits"
       - id: version
         uses: open-turo/actions-release/semantic-release@4d8a6b6aa2d051e7dba0429d8d08beef827b5ccd # v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           dry-run: true
           ci: false
+          extra-plugins: |
+            @semantic-release/commit-analyzer
+            @semantic-release/release-notes-generator
+            @semantic-release/git
+            @semantic-release/github
+            semantic-release-major-tag
 
   publish:
     name: Publish
