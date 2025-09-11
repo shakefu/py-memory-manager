@@ -21,7 +21,7 @@ but it is not recommended.
 Install directly via GitHub using uv:
 
 ```bash
-uv add https://github.com/shakefu/py-memory-manager
+uv add git+https://github.com/shakefu/py-memory-manager
 ```
 
 ## Usage
