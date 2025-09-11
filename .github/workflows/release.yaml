@@ -47,12 +47,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           dry-run: true
           ci: false
-          extra-plugins: |
-            @semantic-release/commit-analyzer
-            @semantic-release/release-notes-generator
-            @semantic-release/git
-            @semantic-release/github
-            semantic-release-major-tag
 
   publish:
     name: Publish
@@ -102,12 +96,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           dry-run: true
           ci: false
-          extra-plugins: |
-            @semantic-release/commit-analyzer
-            @semantic-release/release-notes-generator
-            @semantic-release/git
-            @semantic-release/github
-            semantic-release-major-tag
       - run: |
           # Update version
           uv version ${{ steps.version.outputs.new-release-version }}

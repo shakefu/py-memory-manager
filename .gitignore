@@ -51,3 +51,6 @@ docs/_output
 
 # VSCode
 .vscode
+
+# Node modules
+node_modules/

@@ -16,6 +16,25 @@ user.
 It is technically possible to use multiple memory managers on the same buffer,
 but it is not recommended.
 
+- [py-memory-manager](#py-memory-manager)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Basic Usage Example](#basic-usage-example)
+    - [API](#api)
+      - [`MemoryManager(buf: Buffer)`](#memorymanagerbuf-buffer)
+        - [`alloc(size: int) -> memoryview`](#allocsize-int---memoryview)
+        - [`free(alloc: memoryview)`](#freealloc-memoryview)
+        - [`unallocated() -> int`](#unallocated---int)
+        - [`available() -> int`](#available---int)
+        - [`allocated() -> int`](#allocated---int)
+      - [`create_buffer(size: int) -> bytearray`](#create_buffersize-int---bytearray)
+  - [Contributing](#contributing)
+    - [Committing](#committing)
+    - [Pre-commit Hooks](#pre-commit-hooks)
+    - [Running Tests](#running-tests)
+  - [License](#license)
+  - [Notes](#notes)
+
 ## Installation
 
 Install directly via GitHub using uv:
@@ -57,6 +76,8 @@ print(buf)
 
 This section describes the API of the py-memory-manager library.
 
+---
+
 #### `MemoryManager(buf: Buffer)`
 
 Create a new memory manager for the given buffer. Buffer must be a `bytearray`
@@ -81,6 +102,8 @@ Return the largest contiguous available memory in the buffer.
 ##### `allocated() -> int`
 
 Return the total allocated memory in the buffer.
+
+---
 
 #### `create_buffer(size: int) -> bytearray`
 
@@ -136,6 +159,6 @@ speed.
 
 - `.gitignore` - Standard gitignore file.
 - `.pre-commit-config.yaml` - Standard linting and formatting hooks for Python.
-- `.releaserc.json` - Semantic Release configuration.
+- `.releaserc.yaml` - Semantic Release configuration.
 - `.github/` - GitHub Actions workflows for CI/CD, with support for Semantic
   Release and Renovatebot.
