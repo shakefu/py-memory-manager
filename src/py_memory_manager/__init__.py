@@ -50,6 +50,18 @@ class MemoryManager:
 
     This implements thread safety via locking. Actual writing to the buffer may
     not be thread-safe, depending on the source type of the buffer.
+
+    Example:
+
+    ```python
+    from py_memory_manager import MemoryManager, create_buffer
+
+    buf = create_buffer(1024)
+    mm = MemoryManager(buf)
+    alloc = mm.alloc(100)
+    alloc[:5] = b"Hello"
+    mm.free(alloc)
+    ```
     """
 
     # The memory buffer we're managing
